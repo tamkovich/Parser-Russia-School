@@ -68,7 +68,7 @@ async def page(i):
 
 def main():
     loop = asyncio.get_event_loop()
-    tasks = [loop.create_task(page(str(i))) for i in range(1, 1000)]
+    tasks = [loop.create_task(page(str(i))) for i in range(1, 200000)]
     wait_tasks = asyncio.wait(tasks)
     loop.run_until_complete(wait_tasks)
     loop.close()
