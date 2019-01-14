@@ -62,15 +62,27 @@ async def page(i):
             async with session.get(url) as resp:
                 if resp.status == 200:
                     push_data(await resp.text(), url)
-    #else:
-    #    print(url)
 
 
 def main():
+    cursor.execute("SELECT url FROM schools")
+    ourls = cursor.fetchall()
+    ourls = list(map(lambda url: url[0].split('/')[-2], ourls))
+    nurls = []
+    for i in range(1, 200000):
+        if str(i) not in ourls:
+            nurls.append(i)
+
+    print(len(nurls))
     loop = asyncio.get_event_loop()
-    tasks = [loop.create_task(page(str(i))) for i in range(1, 200000)]
-    wait_tasks = asyncio.wait(tasks)
-    loop.run_until_complete(wait_tasks)
+    a = 1
+    b = 101
+    for _ in range(len(nurls) // 100):
+        tasks = [loop.create_task(page(str(i))) for i in nurls[a:b]]
+        wait_tasks = asyncio.wait(tasks)
+        loop.run_until_complete(wait_tasks)
+        a = b
+        b += 100
     loop.close()
 
 
