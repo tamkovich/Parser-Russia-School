@@ -26,17 +26,18 @@ def create_db():
     # Create table
     cursor.execute(
         '''CREATE TABLE schools
-        (school_name text, 
-        web_site text, 
-        email text, 
+        (school_name text,
+        web_site text,
+        email text,
         address text,
-        phone text, 
+        phone text,
         school_type text,
         affiliation text,
         director text,
-        classes text,   
+        classes text,
         url text)'''
     )
+    cursor.execute('''CREATE TABLE error404 (school_id text)''')
     conn.commit()
 
 
@@ -62,5 +63,5 @@ def _key(key):
 
 
 if __name__ == '__main__':
-    #create_db()
-    view_db()
+    create_db()
+    # view_db()
